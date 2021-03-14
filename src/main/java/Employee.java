@@ -1,10 +1,10 @@
 public class Employee {
 
-    public long id;                                                 // идентификатор сотрудника
-    public String firstName;                                        // имя сотрудника
-    public String lastName;                                         // фамилия сотрудника
-    public String country;                                          // страна проживания сотрудника
-    public int age;                                                 // кол-во лет сотруднику
+    private long id;                                                 // идентификатор сотрудника
+    private String firstName;                                        // имя сотрудника
+    private String lastName;                                         // фамилия сотрудника
+    private String country;                                          // страна проживания сотрудника
+    private int age;                                                 // кол-во лет сотруднику
     /**
      * Необходим для организации парсинга из CSV
      * в объект класса Employee.

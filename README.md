@@ -3,3 +3,4 @@
 Сборщик: Gradle. 
 
 * CSV - JSON парсер
+* XML - JSON парсер
