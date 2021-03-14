@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.*;
 
@@ -50,7 +51,7 @@ public class ParseJson {
      * @param jsonArray некий массив объектов json
      * @param file файл в который необходимо произвести запись
      */
-    public <T>void writeJsArrayToFile(JSONArray jsonArray, File file) {
+    public <T> void writeJsArrayToFile(JSONArray jsonArray, File file) {
         try(FileWriter fileWriter = new FileWriter(file)) {
             fileWriter.write(jsonArray.toJSONString());
             fileWriter.flush();
@@ -58,6 +59,43 @@ public class ParseJson {
             System.out.println(ex.getMessage());
         }
     }
+    /**
+     * Формирует список строк по JSON файлу
+     * !!! JSON объекты обёрнуты в JSON массив !!!
+     * @param file файл.json
+     * @return Список строк (1 строка - 1 объект)
+     */
+    public List<String> readJsonFile(File file) {
+        JSONParser parser = new JSONParser();
+        JSONArray jsonArray;
+        List<String> jsonObjectList = new ArrayList<>();
+        try {
+            Object object = parser.parse(new FileReader(file));
+            jsonArray = (JSONArray) object;
+            for(int i = 0; i < jsonArray.size(); i++) {
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                jsonObjectList.add(jsonObject.toString());
+            }
 
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return jsonObjectList;
+    }
+    /**
+     * Возвращает инициализирует поля переданного объекта
+     * согласно строке (JSON)
+     * @param object строка содержащая JSONObject
+     * @param sthObject объект класса T
+     * @param sthClass класс T
+     * @param <T> тип объекта
+     * @return объект с проинициализированными полями
+     */
+    public <T> T jsonToObject(String object, T sthObject, Class<T> sthClass) {
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        sthObject = gson.fromJson(object, sthClass);
+        return sthObject;
+    }
 }
 

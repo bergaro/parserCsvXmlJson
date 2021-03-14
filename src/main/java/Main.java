@@ -10,8 +10,11 @@ public class Main {
     public static void main(String[] args) {
         List<Employee> staff = csvToJavaClass();
         javaClassToJsonFile(staff, "data.json");
+
         staff = xmlToJavaClass();
         javaClassToJsonFile(staff, "data2.json");
+
+        jsonFileToJavaClass();
     }
     /**
      * Создаёт объекты класса Employee по файлу data.csv.
@@ -62,7 +65,27 @@ public class Main {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-
     }
-
+    /**
+     * Преобразует json файл в объект класса Employee
+     */
+    public static void jsonFileToJavaClass() {
+        List<Employee> staff = new ArrayList<>();
+        File file = new File("exitFiles"+SEPARATOR+"data2.json");
+        ParseJson parseJson = new ParseJson();
+        for(String s : parseJson.readJsonFile(file)) {
+            staff.add(parseJson.jsonToObject(s, new Employee(), Employee.class));
+        }
+        printList(staff);
+    }
+    /**
+     * Выводит в консоль список объектов типа T
+     * @param sthList некий список
+     * @param <T> тип объекта в списке
+     */
+    private static <T> void printList(List<T> sthList) {
+        for(T object : sthList) {
+            System.out.println(object);
+        }
+    }
 }

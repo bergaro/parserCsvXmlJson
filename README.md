@@ -4,3 +4,4 @@
 
 * CSV - JSON парсер
 * XML - JSON парсер
+* JSON парсер
