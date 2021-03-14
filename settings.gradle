@@ -1,0 +1,6 @@
+rootProject.name = 'parser'
+include 'parseJson'
+include 'parseCsv'
+include 'parseXml'
+include 'parserFormat'
+
